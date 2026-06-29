@@ -1,0 +1,18 @@
+# Generated datasets
+Data/processed/*.parquet
+Data/processed/*.csv
+!Data/processed/.gitkeep
+
+# Raw datasets
+Data/raw/*.csv
+Data/raw/*.parquet
+!Data/raw/.gitkeep
+Data/users/
+
+# Sessions
+uploads/sessions/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
