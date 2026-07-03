@@ -63,7 +63,7 @@ class MovieMatcher:
 
         if movies_df is not None:
 
-            self.movies_df = movies_df.copy()
+            self.movies_df = movies_df
 
         else:
 
@@ -86,14 +86,13 @@ class MovieMatcher:
 
         self.title_lookup = {}
 
-        for _, movie in self.movies_df.iterrows():
+        for idx, title, year in zip(
+            self.movies_df.index,
+            self.movies_df["title_lower"],
+            self.movies_df["year"]
+        ):
+            self.title_lookup[(title, year)] = idx
 
-            key = (
-                movie["title_lower"],
-                movie["year"]
-            )
-
-            self.title_lookup[key] = movie
 
         print(f"Indexed {len(self.title_lookup):,} movies")
 
@@ -117,14 +116,13 @@ class MovieMatcher:
         if year is None:
             return None
 
-        movie = self.title_lookup.get(
-            (title, year)
-        )
+        idx = self.title_lookup.get((title, year))
 
-        if movie is None:
+        if idx is None:
             return None
 
-        return movie
+        return self.movies_df.loc[idx]
+    
     # ======================================================
     # Fuzzy Match
     # ======================================================

@@ -1,18 +1,38 @@
-# Generated datasets
-Data/processed/*.parquet
-Data/processed/*.csv
-!Data/processed/.gitkeep
-
-# Raw datasets
-Data/raw/*.csv
-Data/raw/*.parquet
-!Data/raw/.gitkeep
-Data/users/
-
-# Sessions
-uploads/sessions/
-
 # Python
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
+
+# Virtual Environment
+.venv/
+venv/
+
+# IDE
+.vscode/
+.idea/
+
+# Temporary Scripts
+temp*.py
+debug*.py
+memory*.py
+scratch*.py
+experiment*.py
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Local data
+uploads/
+sessions/
+logs/
+Data/raw/*
+!Data/raw/.gitkeep
+
+Data/processed/*
+!Data/processed/.gitkeep
+
+uploads/
+sessions/
+__pycache__/
 .venv/

@@ -62,7 +62,6 @@ class MovieRepository:
 
         self.genre_index = defaultdict(set)
         self.director_index = defaultdict(set)
-        self.cast_index = defaultdict(set)
         self.keyword_index = defaultdict(set)
 
         for movie in self.movies.itertuples(index=True):
@@ -81,13 +80,6 @@ class MovieRepository:
                 if director:
                     self.director_index[director].add(movie.Index)
 
-            for actor in str(movie.cast).lower().split(","):
-
-                actor = actor.strip()
-
-                if actor:
-                    self.cast_index[actor].add(movie.Index)
-
             for keyword in str(movie.keywords).lower().replace("|", ",").split(","):
 
                 keyword = keyword.strip()
@@ -99,6 +91,21 @@ class MovieRepository:
         print(
             f"Loaded {len(self.movies):,} movies."
         )
+        import sys
+
+        print("\nRepository Index Sizes")
+        print("=" * 50)
+
+        print("Genres    :", len(self.genre_index))
+        print("Directors :", len(self.director_index))
+
+        print("Keywords  :", len(self.keyword_index))
+
+        from pympler import asizeof
+
+        print(f"Genre index    : {asizeof.asizeof(self.genre_index)/1024**2:.2f} MB")
+        print(f"Director index : {asizeof.asizeof(self.director_index)/1024**2:.2f} MB")
+        print(f"Keyword index  : {asizeof.asizeof(self.keyword_index)/1024**2:.2f} MB")
 
     # =====================================================
     # Get Entire Dataset
