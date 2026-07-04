@@ -8,52 +8,6 @@ class CandidateGenerator:
         self.repository = repository
 
     # =====================================================
-    # Split Helper
-    # =====================================================
-
-    def split_values(self, value):
-
-        if pd.isna(value):
-            return []
-
-        values = []
-
-        for separator in [",", "-", "|"]:
-
-            if separator in str(value):
-
-                values = [
-                    item.strip().lower()
-                    for item in str(value).split(separator)
-                    if item.strip()
-                ]
-
-                return values
-
-        return [str(value).strip().lower()]
-
-    # =====================================================
-    # Feature Score
-    # =====================================================
-
-    def feature_score(
-        self,
-        movie_values,
-        profile_scores
-    ):
-
-        score = 0.0
-
-        for value in movie_values:
-
-            score += profile_scores.get(
-                value,
-                0
-            )
-
-        return score
-
-    # =====================================================
     # Generate Candidates
     # =====================================================
 
@@ -63,7 +17,7 @@ class CandidateGenerator:
         watched_ids,
         top_k=5000
     ):
-        start_time = time.time()
+        start_time = time.perf_counter()
 
         movies = self.repository.get_candidate_movies(
             profile,
@@ -72,15 +26,15 @@ class CandidateGenerator:
             max_keywords=300
         )
 
-        print(f"Repository lookup time: {time.time() - start_time:.2f} s")
-        start_time = time.time()
+        print(f"Repository lookup time: {time.perf_counter() - start_time:.2f} s")
+        start_time = time.perf_counter()
 
         candidates = movies[
             ~movies["id"].isin(watched_ids)
         ].copy()
 
-        print(f"Filter watched: {time.time() - start_time:.2f} s")
-        start_time = time.time()
+        print(f"Filter watched: {time.perf_counter() - start_time:.2f} s")
+        start_time = time.perf_counter()
 
         candidates["dataset_index"] = candidates.index
 
@@ -88,59 +42,46 @@ class CandidateGenerator:
 
         scores = []
 
-        for movie in candidates.itertuples(index=True):
+        genres = profile.genres
+        directors = profile.directors
+        cast = profile.cast
+        writers = profile.writers
+        keywords = profile.keywords
+        countries = profile.countries
+        languages = profile.languages
+        decades = profile.decades
+        
+
+        for movie in candidates.itertuples(index=False):
 
             score = 0.0
 
-            score += self.feature_score(
-                movie.genres_list,
-                profile.genres
-            )
+            for value in movie.genres_list:
+                score += genres.get(value, 0)
 
-            score += self.feature_score(
-                movie.director_list,
-                profile.directors
-            )
+            for value in movie.director_list:
+                score += directors.get(value, 0)
 
-            score += self.feature_score(
-                movie.cast_list,
-                profile.cast
-            )
+            for value in movie.cast_list:
+                score += cast.get(value, 0)
 
-            score += self.feature_score(
-                movie.writers_list,
-                profile.writers
-            )
+            for value in movie.writers_list:
+                score += writers.get(value, 0)
 
-            score += self.feature_score(
-                movie.keywords_list,
-                profile.keywords
-            )
+            for value in movie.keywords_list:
+                score += keywords.get(value, 0)
 
-            score += self.feature_score(
-                movie.countries_list,
-                profile.countries
-            )
+            for value in movie.countries_list:
+                score += countries.get(value, 0)
 
-            score += self.feature_score(
-                movie.languages_list,
-                profile.languages
-            )
+            for value in movie.languages_list:
+                score += languages.get(value, 0)
 
-            year = movie.year
-
-            if pd.notna(year):
-
-                decade = f"{int(year // 10) * 10}s"
-
-                score += profile.decades.get(
-                    decade,
-                    0
-                )
+            score += decades.get(movie.decade, 0)
 
             scores.append(score)
-        print(f"scored loop: {time.time() - start_time:.2f} s")
-        start_time = time.time()
+        print(f"scored loop: {time.perf_counter() - start_time:.2f} s")
+        start_time = time.perf_counter()
 
         candidates["candidate_score"] = scores
 
@@ -152,7 +93,7 @@ class CandidateGenerator:
             by="candidate_score",
             ascending=False
         )
-        print(f"sorting: {time.time() - start_time:.2f} s")
+        print(f"sorting: {time.perf_counter() - start_time:.2f} s")
         
 
         return candidates.head(top_k)

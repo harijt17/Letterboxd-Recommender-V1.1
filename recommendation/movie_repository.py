@@ -7,6 +7,8 @@ GENRE_WEIGHT = 1
 DIRECTOR_WEIGHT = 2
 KEYWORD_WEIGHT = 1
 
+MAX_CANDIDATES = 30000
+
 
 DEFAULT_DATASET = (
     Path("Data")
@@ -269,24 +271,27 @@ class MovieRepository:
         )[:max_keywords]
 
         # Genres (strong signal)
-        for genre, _ in top_genres:
-            for idx in self.genre_index.get(genre, set()):
-                movie_scores[idx] += GENRE_WEIGHT
+        for genre, weight in top_genres:
+            for idx in self.genre_index.get(genre,()):
+                movie_scores[idx] += weight * GENRE_WEIGHT
 
         # Directors (very strong signal)
-        for director, _ in top_directors:
-            for idx in self.director_index.get(director, set()):
-                movie_scores[idx] += DIRECTOR_WEIGHT
+        for director, weight in top_directors:
+            for idx in self.director_index.get(director, ()):
+                movie_scores[idx] += weight * DIRECTOR_WEIGHT
 
         # Keywords (weak signal)
-        for keyword, _ in top_keywords:
-            for idx in self.keyword_index.get(keyword, set()):
-                movie_scores[idx] += KEYWORD_WEIGHT
+        for keyword, weight in top_keywords:
+            for idx in self.keyword_index.get(keyword, ()):
+                movie_scores[idx] += weight * KEYWORD_WEIGHT
 
         candidate_indices = [
             idx
-            for idx, score in movie_scores.items()
-            if score >= min_score
+            for idx, score in sorted(
+                movie_scores.items(),
+                key=lambda x: x[1],
+                reverse=True
+            )[:MAX_CANDIDATES]
         ]
 
         print(f"Candidate Pool : {len(candidate_indices):,}")

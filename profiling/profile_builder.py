@@ -258,7 +258,7 @@ class ProfileBuilder:
 
             if year:
 
-                decade = f"{int(year // 10) * 10}s"
+                decade = (year // 10) * 10
 
                 profile.decades[
                     decade

@@ -104,6 +104,14 @@ class MovieMatcher:
 
         print(f"Loaded {len(self.movies_df):,} movies")
 
+        # ======================================================
+        # Statistics
+        # ======================================================
+
+        self.exact_matches = 0
+        self.fuzzy_matches = 0
+        self.failed_matches = 0
+
     # ======================================================
     # Exact Match
     # ======================================================
@@ -172,7 +180,7 @@ class MovieMatcher:
     # Main Match
     # ======================================================
 
-    def match_movie(self,title,year=None):
+    def match_movie(self, title, year=None):
 
         movie = self.exact_match(
             title,
@@ -180,13 +188,21 @@ class MovieMatcher:
         )
 
         if movie is not None:
+            self.exact_matches += 1
             return movie
-        
 
-        return self.fuzzy_match(
+        movie = self.fuzzy_match(
             title,
             year
         )
+
+        if movie is not None:
+            self.fuzzy_matches += 1
+            return movie
+
+        self.failed_matches += 1
+        return None
+
     # ======================================================
     # Enrich Movie
     # ======================================================
@@ -243,5 +259,10 @@ class MovieMatcher:
                 unmatched.append(movie)
             else:
                 matched.append(result)
+        print("\nMovie Matching Statistics")
+        print("=" * 40)
+        print(f"Exact Matches : {self.exact_matches}")
+        print(f"Fuzzy Matches : {self.fuzzy_matches}")
+        print(f"Failed        : {self.failed_matches}")
 
         return matched, unmatched
