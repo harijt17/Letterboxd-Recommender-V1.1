@@ -16,9 +16,7 @@ class Recommender:
 
         self.scorer = RecommendationScorer()
 
-        self.content_similarity = ContentSimilarity(
-            repository
-        )
+        self.content_similarity = ContentSimilarity()
 
         self.ranker = RecommendationRanker()
 

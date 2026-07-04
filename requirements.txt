@@ -5,6 +5,7 @@ streamlit
 pandas
 numpy
 pyarrow
+joblib
 
 scikit-learn
 rapidfuzz

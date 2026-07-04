@@ -1,41 +1,45 @@
-import pandas as pd
+from pathlib import Path
 
+import pandas as pd
+import joblib
+from scipy import sparse
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
+
+# ==========================================================
+# Paths
+# ==========================================================
+
+TFIDF_DIR = (
+    Path("Data")
+    / "processed"
+    / "tfidf"
+)
+
+VECTORIZER_PATH = (
+    TFIDF_DIR
+    / "vectorizer.joblib"
+)
+
+MATRIX_PATH = (
+    TFIDF_DIR
+    / "matrix.npz"
+)
 
 
 class ContentSimilarity:
 
-    def __init__(self, repository):
+    def __init__(self):
 
-        self.repository = repository
+        print("Loading TF-IDF model...")
 
-        print("Building TF-IDF model...")
-
-        self.movies = repository.movies
-        
-        self.movies["combined_features"] = (
-            self.movies["combined_features"]
-            .fillna("")
-            .astype(str)
+        self.vectorizer = joblib.load(
+            VECTORIZER_PATH
         )
 
-        self.vectorizer = TfidfVectorizer(
-            stop_words="english",
-            max_features=50000,
-            ngram_range=(1, 2),
-            min_df=2
+        self.movie_matrix = sparse.load_npz(
+            MATRIX_PATH
         )
-
-        self.movie_matrix = self.vectorizer.fit_transform(
-            self.movies["combined_features"]
-        )
-
-        print(
-            f"TF-IDF vocabulary size : "
-            f"{len(self.vectorizer.vocabulary_):,}"
-        )
-
     # =====================================================
     # Rating Weight
     # =====================================================

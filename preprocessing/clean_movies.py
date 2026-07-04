@@ -261,6 +261,29 @@ df = df.sort_values(
 
 df = df.reset_index(drop=True)
 
+
+# ==========================================================
+# Remove Unused Columns
+# ==========================================================
+
+df = df.drop(
+    columns=[
+        "status",
+        "release_date",
+        "vote_count",
+        "imdb_votes",
+        "overview",
+        "original_language",
+        "production_companies",
+        "director_of_photography",
+        "producers",
+        "music_composer",
+        "tagline",
+        "certification_us",
+        "popularity"
+    ]
+)
+
 # ==========================================================
 # Save Processed Dataset
 # ==========================================================
