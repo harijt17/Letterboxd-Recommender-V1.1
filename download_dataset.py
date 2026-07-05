@@ -1,6 +1,8 @@
 from pathlib import Path
 import urllib.request
 
+from utils.paths import PROCESSED_DATA_DIR
+
 
 DATASET_URL = (
     "https://huggingface.co/datasets/harijt7/"
@@ -9,8 +11,7 @@ DATASET_URL = (
 )
 
 OUTPUT_PATH = (
-    Path("Data")
-    / "processed"
+    PROCESSED_DATA_DIR
     / "movies.parquet"
 )
 

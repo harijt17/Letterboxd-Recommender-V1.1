@@ -39,7 +39,6 @@ class RecommendationPipeline:
         session_id
     ):
 
-        start = time.perf_counter()
 
         # ---------------------------------------------
         # Extract Export
@@ -50,9 +49,6 @@ class RecommendationPipeline:
             session_id
         )
 
-        print(f"Extraction: {time.perf_counter() - start:.2f}s")
-        start = time.perf_counter()
-
         # ---------------------------------------------
         # Load Movies
         # ---------------------------------------------
@@ -60,9 +56,6 @@ class RecommendationPipeline:
         loader = ExportLoader(export_folder)
 
         movies = loader.load()
-
-        print(f"Export Loading: {time.perf_counter() - start:.2f}s")
-        start = time.perf_counter()
 
         # ---------------------------------------------
         # Match Movies
@@ -72,9 +65,7 @@ class RecommendationPipeline:
             self.matcher.match_movies(movies)
         )
 
-        print(f"Movie Matching: {time.perf_counter() - start:.2f}s")
-        start = time.perf_counter()
-
+        
         # ---------------------------------------------
         # Build Profile
         # ---------------------------------------------
@@ -82,9 +73,6 @@ class RecommendationPipeline:
         profile = self.profile_builder.build_profile(
             matched_movies
         )
-
-        print(f"Profile Builder: {time.perf_counter() - start:.2f}s")
-        start = time.perf_counter()
 
         # ---------------------------------------------
         # Watched IDs
@@ -105,9 +93,6 @@ class RecommendationPipeline:
             watched_ids=watched_ids,
             top_k=20
         )
-
-        print(f"Recommendation Engine: {time.perf_counter() - start:.2f}s")
-        start = time.perf_counter()
 
         # ---------------------------------------------
         # Save Results
@@ -140,8 +125,6 @@ class RecommendationPipeline:
                 "movies_unmatched": len(unmatched_movies)
             }
         )
-
-        print(f"Saving Session: {time.perf_counter() - start:.2f}s")
 
         # ---------------------------------------------
         # Return Summary

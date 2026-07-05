@@ -3,7 +3,6 @@ from recommendation.scorer import RecommendationScorer
 from recommendation.ranker import RecommendationRanker
 from recommendation.diversity import DiversityFilter
 from recommendation.content_similarity import ContentSimilarity
-import time
 class Recommender:
 
     def __init__(self, repository):
@@ -37,16 +36,12 @@ class Recommender:
         # ----------------------------------------------
         # Generate Candidate Movies
         # ----------------------------------------------
-        start = time.perf_counter()
 
         candidates = self.candidate_generator.generate_candidates(
             profile=profile,
             watched_ids=watched_ids,
             top_k=candidate_pool
         )
-
-        print(f"Candidate Generation: {time.perf_counter()-start:.2f}s")
-        start = time.perf_counter()
 
         if candidates.empty:
             return []
@@ -59,8 +54,6 @@ class Recommender:
             candidates=candidates,
             profile=profile
         )
-        print(f"Metadata Scoring: {time.perf_counter()-start:.2f}s")
-        start = time.perf_counter()
         # ----------------------------------------------
         # Content Similarity
         # ----------------------------------------------
@@ -69,8 +62,7 @@ class Recommender:
             candidates=scored,
             matched_movies=matched_movies
         )
-        print(f"Content Similarity: {time.perf_counter()-start:.2f}s")
-        start = time.perf_counter()
+        
         # ----------------------------------------------
         # Final Recommendation Score
         # ----------------------------------------------
@@ -91,9 +83,7 @@ class Recommender:
             scored_movies=scored,
             top_k=candidate_pool
         )
-        print(f"Ranking: {time.perf_counter()-start:.2f}s")
-        start = time.perf_counter()
-        
+       
         # ----------------------------------------------
         # Apply Diversity Filter
         # ----------------------------------------------
@@ -102,7 +92,6 @@ class Recommender:
             ranked_movies=ranked,
             top_k=top_k
         )
-        print(f"Diversity Filtering: {time.perf_counter()-start:.2f}s")
 
         return recommendations
 

@@ -302,20 +302,10 @@ class ProfileBuilder:
 
         profile.decades = self.normalize_scores(profile.decades)
 
-        print("Genres:", len(profile.genres))
-        print("Directors:", len(profile.directors))
-        print("Cast:", len(profile.cast))
-        print("Keywords:", len(profile.keywords))
-
         profile.directors = self.prune_scores(profile.directors, 0.20)
         profile.cast = self.prune_scores(profile.cast, 0.20)
         profile.keywords = self.prune_scores(profile.keywords, 0.20)
 
-        print("After pruning")
-        print("Genres:", len(profile.genres))
-        print("Directors:", len(profile.directors))
-        print("Cast:", len(profile.cast))
-        print("Keywords:", len(profile.keywords))
         return profile
     
     def normalize_scores(self, scores):

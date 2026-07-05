@@ -1,16 +1,13 @@
-from pathlib import Path
+from utils.paths import PROCESSED_DATA_DIR
 import re
 
 import pandas as pd
 from rapidfuzz import process, fuzz
 
-
 DEFAULT_DATASET = (
-    Path("Data")
-    / "processed"
+    PROCESSED_DATA_DIR
     / "movies.parquet"
 )
-
 
 # ==========================================================
 # Helpers
@@ -70,8 +67,6 @@ class MovieMatcher:
             if dataset_path is None:
                 dataset_path = DEFAULT_DATASET
 
-            print("Loading processed movie dataset...")
-
             self.movies_df = pd.read_parquet(dataset_path)
 
         self.movies_df["title_lower"] = (
@@ -82,8 +77,6 @@ class MovieMatcher:
         # Build Lookup Tables
         # ======================================================
 
-        print("Building title lookup...")
-
         self.title_lookup = {}
 
         for idx, title, year in zip(
@@ -93,24 +86,11 @@ class MovieMatcher:
         ):
             self.title_lookup[(title, year)] = idx
 
-
-        print(f"Indexed {len(self.title_lookup):,} movies")
-
         self.movie_titles = (
             self.movies_df["title_lower"]
             .unique()
             .tolist()
         )
-
-        print(f"Loaded {len(self.movies_df):,} movies")
-
-        # ======================================================
-        # Statistics
-        # ======================================================
-
-        self.exact_matches = 0
-        self.fuzzy_matches = 0
-        self.failed_matches = 0
 
     # ======================================================
     # Exact Match
@@ -188,7 +168,6 @@ class MovieMatcher:
         )
 
         if movie is not None:
-            self.exact_matches += 1
             return movie
 
         movie = self.fuzzy_match(
@@ -197,10 +176,8 @@ class MovieMatcher:
         )
 
         if movie is not None:
-            self.fuzzy_matches += 1
             return movie
 
-        self.failed_matches += 1
         return None
 
     # ======================================================
@@ -255,14 +232,8 @@ class MovieMatcher:
             result = self.enrich_movie(movie)
 
             if result is None:
-                print(f"UNMATCHED: {movie['title']} ({movie.get('year')})")
                 unmatched.append(movie)
             else:
                 matched.append(result)
-        print("\nMovie Matching Statistics")
-        print("=" * 40)
-        print(f"Exact Matches : {self.exact_matches}")
-        print(f"Fuzzy Matches : {self.fuzzy_matches}")
-        print(f"Failed        : {self.failed_matches}")
 
         return matched, unmatched

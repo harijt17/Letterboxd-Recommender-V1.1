@@ -9,10 +9,10 @@ KEYWORD_WEIGHT = 1
 
 MAX_CANDIDATES = 30000
 
+from utils.paths import PROCESSED_DATA_DIR
 
 DEFAULT_DATASET = (
-    Path("Data")
-    / "processed"
+    PROCESSED_DATA_DIR
     / "movies.parquet"
 )
 
@@ -41,14 +41,9 @@ class MovieRepository:
         if dataset_path is None:
             dataset_path = DEFAULT_DATASET
 
-        print("Loading movie repository...")
-
         self.movies = pd.read_parquet(
             dataset_path
         )
-
-    
-        print("Precomputing movie features...")
 
         self.movies["genres_list"] = self.movies["genres"].apply(split_values)
         self.movies["director_list"] = self.movies["director"].apply(split_values)
@@ -58,9 +53,6 @@ class MovieRepository:
         self.movies["countries_list"] = self.movies["production_countries"].apply(split_values)
         self.movies["languages_list"] = self.movies["spoken_languages"].apply(split_values)
 
-        print("Movie features cached.")
-
-        print("Building repository indexes...")
 
         self.genre_index = defaultdict(set)
         self.director_index = defaultdict(set)
@@ -89,25 +81,6 @@ class MovieRepository:
                 if keyword:
                     self.keyword_index[keyword].add(movie.Index)
 
-        print("Indexes built.")
-        print(
-            f"Loaded {len(self.movies):,} movies."
-        )
-        import sys
-
-        print("\nRepository Index Sizes")
-        print("=" * 50)
-
-        print("Genres    :", len(self.genre_index))
-        print("Directors :", len(self.director_index))
-
-        print("Keywords  :", len(self.keyword_index))
-
-        from pympler import asizeof
-
-        print(f"Genre index    : {asizeof.asizeof(self.genre_index)/1024**2:.2f} MB")
-        print(f"Director index : {asizeof.asizeof(self.director_index)/1024**2:.2f} MB")
-        print(f"Keyword index  : {asizeof.asizeof(self.keyword_index)/1024**2:.2f} MB")
 
     # =====================================================
     # Get Entire Dataset
@@ -293,8 +266,6 @@ class MovieRepository:
                 reverse=True
             )[:MAX_CANDIDATES]
         ]
-
-        print(f"Candidate Pool : {len(candidate_indices):,}")
 
         if not candidate_indices:
             return self.movies.iloc[[]].copy()

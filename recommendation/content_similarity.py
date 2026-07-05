@@ -1,18 +1,17 @@
-from pathlib import Path
-
 import pandas as pd
 import joblib
 from scipy import sparse
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
+from utils.paths import PROCESSED_DATA_DIR
+
 # ==========================================================
 # Paths
 # ==========================================================
 
 TFIDF_DIR = (
-    Path("Data")
-    / "processed"
+    PROCESSED_DATA_DIR
     / "tfidf"
 )
 
@@ -25,7 +24,6 @@ MATRIX_PATH = (
     TFIDF_DIR
     / "matrix.npz"
 )
-
 
 class ContentSimilarity:
 

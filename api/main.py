@@ -18,25 +18,11 @@ async def lifespan(app: FastAPI):
     print("Starting LB Rec API...")
     print("=" * 60)
 
-    import os
-    import psutil
-
-    process = psutil.Process(os.getpid())
-
-    def log_ram(stage):
-        print(f"{stage}: {process.memory_info().rss / 1024 / 1024:.2f} MB")
-
     download_dataset()
-    log_ram("After dataset check")
 
     get_repository()
-    log_ram("After repository")
-
     get_matcher()
-    log_ram("After matcher")
-
     get_recommender()
-    log_ram("After recommender")
 
     print("=" * 60)
     print("API Ready")
