@@ -36,3 +36,26 @@ uploads/
 sessions/
 __pycache__/
 .venv/
+
+
+# Temporary extracted Letterboxd exports
+Data/extracted/
+
+# Uploaded ZIPs
+Data/uploads/
+
+
+# Build outputs
+launcher.build/
+launcher.dist/
+build/
+dist/
+*.build/
+*.dist/
+
+# PyInstaller
+*.spec
+
+# Python cache
+__pycache__/
+*.pyc
