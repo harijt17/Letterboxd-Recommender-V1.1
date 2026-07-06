@@ -5,18 +5,15 @@ import zipfile
 
 class ZipExtractor:
     """
-    Handles extraction of Letterboxd export ZIP files.
+    Extracts a Letterboxd export ZIP into a temporary folder.
 
     Data/
         extracted/
-            <session_id>/
+            desktop/
                 ratings.csv
                 reviews.csv
                 diary.csv
-                watched.csv
-                watchlist.csv
-                comments.csv
-                profile.csv
+                ...
     """
 
     def __init__(self, extract_root="Data/extracted"):
@@ -32,11 +29,7 @@ class ZipExtractor:
     # Extract ZIP
     # =====================================================
 
-    def extract(
-        self,
-        zip_path,
-        session_id
-    ):
+    def extract(self, zip_path):
 
         zip_path = Path(zip_path)
 
@@ -50,16 +43,15 @@ class ZipExtractor:
                 "Only ZIP files are supported."
             )
 
-        session_folder = (
+        extract_folder = (
             self.extract_root /
-            session_id
+            "desktop"
         )
 
-        # Remove old session if it exists
-        if session_folder.exists():
-            shutil.rmtree(session_folder)
+        if extract_folder.exists():
+            shutil.rmtree(extract_folder)
 
-        session_folder.mkdir(
+        extract_folder.mkdir(
             parents=True,
             exist_ok=True
         )
@@ -72,13 +64,13 @@ class ZipExtractor:
             ) as zip_ref:
 
                 zip_ref.extractall(
-                    session_folder
+                    extract_folder
                 )
 
         except zipfile.BadZipFile:
 
             shutil.rmtree(
-                session_folder,
+                extract_folder,
                 ignore_errors=True
             )
 
@@ -86,113 +78,18 @@ class ZipExtractor:
                 "Invalid or corrupted ZIP file."
             )
 
-        return session_folder
+        return extract_folder
 
     # =====================================================
-    # Session Folder
+    # Cleanup
     # =====================================================
 
-    def get_session_folder(
-        self,
-        session_id
-    ):
+    def cleanup(self):
 
         folder = (
             self.extract_root /
-            session_id
-        )
-
-        if not folder.exists():
-            raise FileNotFoundError(
-                f"Session '{session_id}' not found."
-            )
-
-        return folder
-
-    # =====================================================
-    # Get File
-    # =====================================================
-
-    def get_file(
-        self,
-        session_id,
-        filename
-    ):
-
-        file = (
-            self.extract_root /
-            session_id /
-            filename
-        )
-
-        if not file.exists():
-            return None
-
-        return file
-
-    # =====================================================
-    # List Files
-    # =====================================================
-
-    def list_files(
-        self,
-        session_id
-    ):
-
-        folder = self.get_session_folder(
-            session_id
-        )
-
-        return sorted(
-            file.name
-            for file in folder.iterdir()
-            if file.is_file()
-        )
-
-    # =====================================================
-    # Session Exists
-    # =====================================================
-
-    def session_exists(
-        self,
-        session_id
-    ):
-
-        return (
-            self.extract_root /
-            session_id
-        ).exists()
-
-    # =====================================================
-    # Cleanup Session
-    # =====================================================
-
-    def cleanup(
-        self,
-        session_id
-    ):
-
-        folder = (
-            self.extract_root /
-            session_id
+            "desktop"
         )
 
         if folder.exists():
             shutil.rmtree(folder)
-
-    # =====================================================
-    # Cleanup All
-    # =====================================================
-
-    def cleanup_all(self):
-
-        if self.extract_root.exists():
-
-            shutil.rmtree(
-                self.extract_root
-            )
-
-            self.extract_root.mkdir(
-                parents=True,
-                exist_ok=True
-            )

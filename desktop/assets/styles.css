@@ -1,0 +1,262 @@
+/* ==========================================================
+   LETTERBOXD RECOMMENDER
+   GLOBAL THEME
+========================================================== */
+
+
+/* ==========================================================
+   1. RESET
+========================================================== */
+
+*{
+
+    margin:0;
+
+    padding:0;
+
+    box-sizing:border-box;
+
+}
+
+
+/* ==========================================================
+   2. ROOT VARIABLES
+========================================================== */
+
+:root{
+
+    /* Primary */
+
+    --primary:#2B7FFF;
+
+    --primary-hover:#4A92FF;
+
+    --primary-dark:#1F6FE5;
+
+    --primary-deep:#165DCC;
+
+
+    /* Background */
+
+    --background:#020617;
+
+    --background-soft:#08111F;
+
+    --background-card:rgba(10,18,35,.68);
+
+
+    /* Text */
+
+    --text:#FFFFFF;
+
+    --text-secondary:#CBD5E1;
+
+    --text-muted:#94A3B8;
+
+
+    /* Glass */
+
+    --glass:rgba(10,18,35,.60);
+
+    --glass-border:rgba(255,255,255,.06);
+
+
+    /* Radius */
+
+    --radius:22px;
+
+
+}
+
+
+/* ==========================================================
+   3. PAGE
+========================================================== */
+
+html,
+body,
+.nicegui-content{
+
+    min-height:100vh;
+
+    overflow-x:hidden;
+
+    color:var(--text);
+
+    font-family:
+
+        Inter,
+
+        "Segoe UI",
+
+        sans-serif;
+
+}
+
+
+/* ==========================================================
+   4. BACKGROUND
+========================================================== */
+
+body{
+
+    background:
+
+        radial-gradient(
+
+            circle at top left,
+
+            rgba(43,127,255,.12),
+
+            transparent 35%
+
+        ),
+
+        radial-gradient(
+
+            circle at top right,
+
+            rgba(59,130,246,.08),
+
+            transparent 30%
+
+        ),
+
+        radial-gradient(
+
+            circle at bottom,
+
+            rgba(29,78,216,.10),
+
+            transparent 45%
+
+        ),
+
+        linear-gradient(
+
+            135deg,
+
+            #020617 0%,
+
+            #07101C 20%,
+
+            #0A1424 45%,
+
+            #101827 70%,
+
+            #151B34 100%
+
+        );
+
+}
+
+
+/* ==========================================================
+   5. TYPOGRAPHY
+========================================================== */
+
+.hero-title {
+
+    font-size: 3.8rem;
+
+    font-weight: 800;
+
+    letter-spacing: -1px;
+
+    color: var(--text);
+
+    text-align: center;
+
+    text-shadow:
+        0 0 30px rgba(43,127,255,.15);
+
+}
+
+
+.hero-subtitle {
+
+    margin-top: 14px;
+
+    max-width: 720px;
+
+    text-align: center;
+
+    color: var(--text-secondary);
+
+    font-size: 1.1rem;
+
+    line-height: 1.7;
+
+}
+
+
+.hero-upload-subtitle{
+
+    color:var(--text-muted);
+
+    font-size:1rem;
+
+    text-align:center;
+
+    line-height:1.6;
+
+    max-width:500px;
+
+}
+
+
+.hero-section {
+
+    padding-top: 36px;
+
+    padding-bottom: 30px;
+
+}
+
+
+/* ==========================================================
+   6. UTILITIES
+========================================================== */
+
+.text-muted{
+
+    color:var(--text-muted);
+
+}
+
+.text-secondary{
+
+    color:var(--text-secondary);
+
+}
+
+.text-primary{
+
+    color:var(--primary);
+
+}
+
+
+/* ==========================================================
+   7. GLASS
+========================================================== */
+
+.glass{
+
+    background:
+
+        var(--glass);
+
+    backdrop-filter:
+
+        blur(22px);
+
+    border:
+
+        1px solid var(--glass-border);
+
+    border-radius:
+
+        var(--radius);
+
+}

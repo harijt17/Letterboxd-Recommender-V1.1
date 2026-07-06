@@ -1,0 +1,542 @@
+/* ==========================================================
+   LETTERBOXD RECOMMENDER
+   COMPONENTS
+========================================================== */
+
+
+/* ==========================================================
+   1. UPLOAD BOX
+========================================================== */
+
+.upload-box {
+
+    width: 640px;
+
+    min-height: 240px;
+
+    padding: 40px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 10px;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(18,28,48,.82),
+            rgba(10,18,35,.70)
+        );
+
+    backdrop-filter:
+        blur(26px);
+
+    border:
+        2px dashed rgba(43,127,255,.30);
+
+    border-radius: 24px;
+
+    box-shadow:
+        0 15px 45px rgba(0,0,0,.28);
+
+    transition:
+        all .30s ease;
+
+}
+
+.upload-box:hover {
+
+    transform:
+        translateY(-3px);
+
+    border-color:
+        var(--primary);
+
+    box-shadow:
+        0 0 28px rgba(43,127,255,.22);
+
+}
+
+
+/* ==========================================================
+   2. UPLOAD ICON
+========================================================== */
+
+.upload-icon {
+
+    font-size: 68px;
+
+    color: var(--primary);
+
+    margin-bottom: 10px;
+
+    filter:
+        drop-shadow(0 0 14px rgba(43,127,255,.30));
+
+}
+
+
+/* ==========================================================
+   3. UPLOAD TEXT
+========================================================== */
+
+.upload-title {
+
+    font-size: 2rem;
+
+    font-weight: 700;
+
+    letter-spacing: -.3px;
+
+    color: white;
+
+}
+
+.upload-subtitle {
+
+    max-width: 480px;
+
+    text-align: center;
+
+    color: var(--text-muted);
+
+    font-size: .98rem;
+
+    line-height: 1.65;
+
+}
+
+.upload-status {
+
+    margin-top: 18px;
+
+    color: #22C55E;
+
+    font-size: 1rem;
+
+    font-weight: 600;
+
+}
+
+
+/* ==========================================================
+   4. GENERATE BUTTON
+========================================================== */
+
+.gradient-button {
+
+    background:
+        linear-gradient(
+            135deg,
+            #2B7FFF 0%,
+            #2475ED 45%,
+            #1C67DA 100%
+        );
+
+    color: white;
+
+    border: 1px solid rgba(255,255,255,.08);
+
+    border-radius: 999px;
+
+    padding: 13px 36px;
+
+    font-size: 1rem;
+
+    font-weight: 700;
+
+    letter-spacing: .2px;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 10px 24px rgba(43,127,255,.22);
+
+    transition:
+        all .25s ease;
+
+}
+
+.gradient-button:hover {
+
+    transform:
+        translateY(-3px);
+
+    box-shadow:
+        0 0 35px rgba(43,127,255,.35);
+
+}
+
+.gradient-button:active {
+
+    transform:
+        translateY(-1px);
+
+}
+
+
+/* ==========================================================
+   5. PROGRESS BAR
+========================================================== */
+
+.progress-bar {
+
+    width: 620px;
+
+    margin-top: 16px;
+
+    border-radius: 999px;
+
+    overflow: hidden;
+
+}
+
+.progress-bar .q-linear-progress__track {
+
+    background:
+        rgba(255,255,255,.08);
+
+}
+
+.progress-bar .q-linear-progress__model {
+
+    background:
+        linear-gradient(
+            90deg,
+            #2B7FFF,
+            #1F6FE5
+        );
+
+}
+
+
+/* ==========================================================
+   6. STATS CARDS
+========================================================== */
+
+.stats-card {
+
+    width: 220px;
+
+    min-height: 150px;
+
+    padding: 24px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+    background:
+        rgba(12,18,32,.70);
+
+    backdrop-filter:
+        blur(24px);
+
+    border:
+        1px solid rgba(255,255,255,.06);
+
+    border-radius: 22px;
+
+    transition:
+        all .30s ease;
+
+}
+
+.stats-card:hover {
+
+    transform:
+        translateY(-4px);
+
+    border-color:
+        rgba(43,127,255,.25);
+
+    box-shadow:
+        0 12px 35px rgba(43,127,255,.15);
+
+}
+
+
+/* ==========================================================
+   7. MOVIE CARD
+========================================================== */
+
+.movie-card-horizontal {
+
+    width: 700px;
+
+    min-height: 300px;
+
+    display: flex;
+
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(18,28,48,.88),
+            rgba(10,18,35,.74)
+        );
+
+    backdrop-filter:
+        blur(24px);
+
+    border:
+        1px solid rgba(255,255,255,.06);
+
+    border-radius: 24px;
+
+    transition:
+        all .30s ease;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 10px 35px rgba(0,0,0,.25);
+
+}
+
+.movie-card-horizontal:hover {
+
+    transform:
+        translateY(-5px);
+
+    border-color:
+        rgba(43,127,255,.22);
+
+    box-shadow:
+        0 18px 45px rgba(43,127,255,.18);
+
+}
+
+
+/* ==========================================================
+   8. MOVIE POSTER
+========================================================== */
+
+.movie-poster-horizontal {
+
+    width: 200px;
+
+    height: 300px;
+
+    flex-shrink: 0;
+
+    overflow: hidden;
+
+    background:
+        #0f172a;
+
+}
+
+.movie-poster-horizontal img {
+
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: cover;
+
+    transition:
+        transform .35s ease;
+
+}
+
+.movie-card-horizontal:hover .movie-poster-horizontal img {
+
+    transform:
+        scale(1.05);
+
+}
+
+
+/* ==========================================================
+   9. MOVIE CONTENT
+========================================================== */
+
+.movie-content {
+
+    flex: 1;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: flex-start;
+
+    padding: 26px;
+
+    gap: 12px;
+
+}
+
+.movie-content hr {
+
+    border: none;
+
+    border-top:
+        1px solid rgba(255,255,255,.06);
+
+    margin:
+        8px 0;
+
+}
+
+
+/* ==========================================================
+   10. MOVIE TITLE
+========================================================== */
+
+.movie-title-horizontal {
+
+    font-size: 1.65rem;
+
+    font-weight: 800;
+
+    color: white;
+
+    line-height: 1.3;
+
+    letter-spacing: -.4px;
+
+    margin-bottom: 4px;
+
+}
+
+
+/* ==========================================================
+   11. MOVIE CHIPS
+========================================================== */
+
+.imdb-chip {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 7px 14px;
+
+    background:
+
+        rgba(250,204,21,.12);
+
+    color:
+
+        #FACC15;
+
+    border:
+
+        1px solid rgba(250,204,21,.20);
+
+    border-radius:
+
+        999px;
+
+    font-size:
+
+        .88rem;
+
+    font-weight:
+
+        700;
+
+}
+
+.match-chip {
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:
+
+        7px 16px;
+
+    background:
+
+        linear-gradient(
+            135deg,
+            var(--primary),
+            var(--primary-dark)
+        );
+
+    color:white;
+
+    border-radius:999px;
+
+    font-size:.88rem;
+
+    font-weight:700;
+
+    box-shadow:
+        0 4px 14px rgba(43,127,255,.25);
+
+}
+
+
+/* ==========================================================
+   12. MOVIE METADATA
+========================================================== */
+
+.movie-genre-horizontal,
+.movie-director-horizontal,
+.movie-runtime,
+.movie-language {
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    font-size:.95rem;
+
+    color:var(--text-secondary);
+
+}
+
+.movie-genre-horizontal {
+
+    color:#A5B4FC;
+
+}
+
+.movie-runtime {
+
+    color:#94A3B8;
+
+}
+
+.movie-language {
+
+    color:#94A3B8;
+
+}
+
+.movie-overview {
+
+    margin-top:10px;
+
+    color:var(--text-muted);
+
+    line-height:1.75;
+
+    font-size:.94rem;
+
+    text-align:justify;
+
+}

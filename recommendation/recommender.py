@@ -93,6 +93,24 @@ class Recommender:
             top_k=top_k
         )
 
+        # ----------------------------------------------
+        # Normalize Display Score 
+        # ----------------------------------------------
+
+        max_score = recommendations["recommendation_score"].max()
+
+        if max_score > 0:
+
+            recommendations["display_score"] = (
+                recommendations["recommendation_score"]
+                / max_score
+                * 100
+            ).round().astype(int)
+
+        else:
+
+            recommendations["display_score"] = 0
+
         return recommendations
 
     # =====================================================
