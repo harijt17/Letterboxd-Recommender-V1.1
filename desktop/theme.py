@@ -1,5 +1,4 @@
-from pathlib import Path
-
+from desktop.resources import resource_path
 from nicegui import ui
 
 
@@ -43,22 +42,32 @@ def setup_theme():
     # Global CSS
     # ------------------------------------------------------
 
-    assets = Path("desktop/assets")
-
     ui.add_css(
-        (assets / "styles.css").read_text(
+        resource_path(
+            "desktop",
+            "assets",
+            "styles.css",
+        ).read_text(
             encoding="utf-8"
         )
     )
 
     ui.add_css(
-        (assets / "components.css").read_text(
+        resource_path(
+            "desktop",
+            "assets",
+            "components.css",
+        ).read_text(
             encoding="utf-8"
         )
     )
 
     ui.add_css(
-        (assets / "animations.css").read_text(
+        resource_path(
+            "desktop",
+            "assets",
+            "animations.css",
+        ).read_text(
             encoding="utf-8"
         )
     )

@@ -2,10 +2,13 @@ from pathlib import Path
 import shutil
 import zipfile
 
+from desktop.runtime import EXTRACTED_DIR
 
 class ZipExtractor:
     """
-    Extracts a Letterboxd export ZIP into a temporary folder.
+    Extracts a Letterboxd export ZIP.
+
+    Runtime Structure:
 
     Data/
         extracted/
@@ -16,15 +19,11 @@ class ZipExtractor:
                 ...
     """
 
-    def __init__(self, extract_root="Data/extracted"):
+    def __init__(self):
 
-        self.extract_root = Path(extract_root)
+        self.extract_root = EXTRACTED_DIR
 
-        self.extract_root.mkdir(
-            parents=True,
-            exist_ok=True
-        )
-
+        
     # =====================================================
     # Extract ZIP
     # =====================================================
@@ -34,11 +33,13 @@ class ZipExtractor:
         zip_path = Path(zip_path)
 
         if not zip_path.exists():
+
             raise FileNotFoundError(
                 f"ZIP file not found:\n{zip_path}"
             )
 
         if zip_path.suffix.lower() != ".zip":
+
             raise ValueError(
                 "Only ZIP files are supported."
             )
@@ -48,19 +49,30 @@ class ZipExtractor:
             "desktop"
         )
 
+        # -------------------------------------------------
+        # Clean previous extraction
+        # -------------------------------------------------
+
         if extract_folder.exists():
-            shutil.rmtree(extract_folder)
+
+            shutil.rmtree(
+                extract_folder
+            )
 
         extract_folder.mkdir(
             parents=True,
-            exist_ok=True
+            exist_ok=True,
         )
+
+        # -------------------------------------------------
+        # Extract ZIP
+        # -------------------------------------------------
 
         try:
 
             with zipfile.ZipFile(
                 zip_path,
-                "r"
+                "r",
             ) as zip_ref:
 
                 zip_ref.extractall(
@@ -71,7 +83,7 @@ class ZipExtractor:
 
             shutil.rmtree(
                 extract_folder,
-                ignore_errors=True
+                ignore_errors=True,
             )
 
             raise ValueError(
@@ -86,10 +98,14 @@ class ZipExtractor:
 
     def cleanup(self):
 
-        folder = (
+        extract_folder = (
             self.extract_root /
             "desktop"
         )
 
-        if folder.exists():
-            shutil.rmtree(folder)
+        if extract_folder.exists():
+
+            shutil.rmtree(
+                extract_folder,
+                ignore_errors=True,
+            )

@@ -1,4 +1,4 @@
-from api_client import get_session
+from legacy.frontend.api_client import get_session
 
 print(
     get_session(

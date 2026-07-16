@@ -1,61 +1,70 @@
+# ==========================================================
 # Python
+# ==========================================================
 __pycache__/
-*.pyc
+*.py[cod]
 *.pyo
 *.pyd
 
-# Virtual Environment
+# ==========================================================
+# Virtual Environments
+# ==========================================================
 .venv/
+.venv312/
 venv/
 
+# ==========================================================
 # IDE
+# ==========================================================
 .vscode/
 .idea/
 
-# Temporary Scripts
+# ==========================================================
+# Jupyter
+# ==========================================================
+.ipynb_checkpoints/
+
+# ==========================================================
+# Temporary / Debug Scripts
+# ==========================================================
 temp*.py
 debug*.py
 memory*.py
 scratch*.py
 experiment*.py
 
-# Jupyter
-.ipynb_checkpoints/
+# ==========================================================
+# Runtime Data
+# ==========================================================
+Data/uploads/
+Data/extracted/
 
-# Local data
-uploads/
-sessions/
-logs/
+# Generated datasets
 Data/raw/*
 !Data/raw/.gitkeep
 
 Data/processed/*
 !Data/processed/.gitkeep
 
+# ==========================================================
+# Local Files
+# ==========================================================
 uploads/
 sessions/
-__pycache__/
-.venv/
+logs/
 
-
-# Temporary extracted Letterboxd exports
-Data/extracted/
-
-# Uploaded ZIPs
-Data/uploads/
-
-
-# Build outputs
-launcher.build/
-launcher.dist/
-build/
+# ==========================================================
+# Build Output
+# ==========================================================
 dist/
+build_output/
 *.build/
 *.dist/
+*.onefile-build/
 
-# PyInstaller
-*.spec
-
-# Python cache
-__pycache__/
-*.pyc
+# ==========================================================
+# Operating System
+# ==========================================================
+Thumbs.db
+Desktop.ini
+.DS_Store

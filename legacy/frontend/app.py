@@ -1,6 +1,6 @@
 import streamlit as st
 
-from api_client import (
+from legacy.frontend.api_client import (
     upload_export,
     get_recommendations
 )

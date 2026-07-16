@@ -5,21 +5,18 @@ import pandas as pd
 from scipy import sparse
 from sklearn.feature_extraction.text import TfidfVectorizer
 
+from utils.paths import PROCESSED_DATA_DIR, TFIDF_DIR
+
 # ==========================================================
 # Paths
 # ==========================================================
 
 DATASET_PATH = (
-    Path("Data")
-    / "processed"
+    PROCESSED_DATA_DIR
     / "movies.parquet"
 )
 
-OUTPUT_DIR = (
-    Path("Data")
-    / "processed"
-    / "tfidf"
-)
+OUTPUT_DIR = TFIDF_DIR
 
 OUTPUT_DIR.mkdir(
     parents=True,
@@ -35,7 +32,6 @@ MATRIX_PATH = (
     OUTPUT_DIR
     / "matrix.npz"
 )
-
 # ==========================================================
 # Load Dataset
 # ==========================================================

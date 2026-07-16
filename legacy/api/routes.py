@@ -5,20 +5,20 @@ from fastapi import (
     HTTPException
 )
 
-from api.schemas import (
+from legacy.api.schemas import (
     UploadResponse,
     RecommendationResponse,
     SessionResponse
 )
 
-from api.dependencies import (
+from legacy.api.dependencies import (
     get_matcher,
     get_recommender
 )
 
-from api.pipeline import RecommendationPipeline
+from legacy.api.pipeline import RecommendationPipeline
 
-from api.session_manager import SessionManager
+from legacy.api.session_manager import SessionManager
 
 
 router = APIRouter()

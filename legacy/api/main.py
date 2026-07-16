@@ -2,8 +2,8 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 
-from api.routes import router
-from api.dependencies import (
+from legacy.api.routes import router
+from legacy.api.dependencies import (
     get_repository,
     get_matcher,
     get_recommender,
