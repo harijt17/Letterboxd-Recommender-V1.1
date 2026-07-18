@@ -32,28 +32,11 @@ BASE_DIR = get_base_path()
 # ==========================================================
 
 def get_data_directory() -> Path:
-    """
-    Development:
-        Project/Data
 
-    Packaged:
-        %LOCALAPPDATA%/Letterboxd Recommender
-    """
-
-    if getattr(sys, "frozen", False):
-
-        local_appdata = Path(
-            os.environ["LOCALAPPDATA"]
-        )
-
-        data_dir = (
-            local_appdata /
-            "Letterboxd Recommender"
-        )
-
-    else:
-
-        data_dir = BASE_DIR / "Data"
+    data_dir = (
+        Path(os.environ["LOCALAPPDATA"])
+        / "Letterboxd Recommender"
+    )
 
     data_dir.mkdir(
         parents=True,

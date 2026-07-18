@@ -2,33 +2,21 @@ $ErrorActionPreference = "Stop"
 
 Write-Host ""
 Write-Host "============================================================"
-Write-Host " Letterboxd Recommender - Development Build"
+Write-Host " Letterboxd Recommender - Release Build"
 Write-Host "============================================================"
 Write-Host ""
 
-# ----------------------------------------------------------
-# Clean Previous Development Build
-# ----------------------------------------------------------
-
-Write-Host "Cleaning previous build..."
+Write-Host "Cleaning previous release build..."
 
 Remove-Item ".\dist" -Recurse -Force -ErrorAction SilentlyContinue
-Remove-Item ".\launcher.build" -Recurse -Force -ErrorAction SilentlyContinue
-Remove-Item ".\launcher.dist" -Recurse -Force -ErrorAction SilentlyContinue
-Remove-Item ".\launcher.onefile-build" -Recurse -Force -ErrorAction SilentlyContinue
 
 Write-Host "Done."
 Write-Host ""
 
-# ----------------------------------------------------------
-# Build
-# ----------------------------------------------------------
-
-Write-Host "Building..."
+Write-Host "Building release..."
 
 python -m nuitka `
     --standalone `
-    --follow-imports `
     --jobs=12 `
     --assume-yes-for-downloads `
     --include-package=nicegui `
@@ -50,7 +38,7 @@ python -m nuitka `
 
 Write-Host ""
 Write-Host "============================================================"
-Write-Host " Development Build Complete"
+Write-Host " Release Build Complete"
 Write-Host "============================================================"
 Write-Host ""
 

@@ -1,28 +1,25 @@
 $ErrorActionPreference = "Stop"
 
-& "$PSScriptRoot\clean.ps1"
-
 Write-Host ""
 Write-Host "============================================================"
-Write-Host " Letterboxd Recommender - Release Build"
+Write-Host " Letterboxd Recommender - Development Build"
 Write-Host "============================================================"
 Write-Host ""
 
-Write-Host "Building release..."
+Write-Host "Starting incremental build..."
 Write-Host ""
 
 python -m nuitka `
     --standalone `
     --jobs=12 `
     --assume-yes-for-downloads `
+    --remove-output `
     --include-package=nicegui `
     --include-package-data=nicegui `
     --include-package=scipy `
-    --include-package=sklearn `
     --include-package=pandas `
     --include-package=numpy `
     --include-package=pyarrow `
-    --include-package=joblib `
     --nofollow-import-to=sklearn.tests `
     --nofollow-import-to=scipy.tests `
     --nofollow-import-to=numpy.tests `
@@ -34,7 +31,7 @@ python -m nuitka `
 
 Write-Host ""
 Write-Host "============================================================"
-Write-Host " Release Build Complete"
+Write-Host " Development Build Complete"
 Write-Host "============================================================"
 Write-Host ""
 

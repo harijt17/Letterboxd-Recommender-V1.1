@@ -1,3 +1,5 @@
+from utils.paths import DATA_DIR, UPLOADS_DIR
+
 # ==========================================================
 # Application Information
 # ==========================================================
@@ -27,8 +29,8 @@ WINDOW_HEIGHT = 900
 # Directories
 # ==========================================================
 
-DATA_FOLDER = "Data"
+DATA_FOLDER = DATA_DIR
 
-UPLOAD_FOLDER = "Data/uploads"
+UPLOAD_FOLDER = UPLOADS_DIR
 
 ASSETS_FOLDER = "desktop/assets"
