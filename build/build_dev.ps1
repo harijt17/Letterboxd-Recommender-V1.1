@@ -25,6 +25,7 @@ python -m nuitka `
     --nofollow-import-to=numpy.tests `
     --nofollow-import-to=pandas.tests `
     --include-data-dir=desktop/assets=desktop/assets `
+    --windows-icon-from-ico=desktop/assets/icon.ico `
     --output-dir=dist `
     --output-filename="Letterboxd Recommender.exe" `
     launcher.py

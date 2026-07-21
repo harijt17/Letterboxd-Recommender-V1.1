@@ -62,6 +62,7 @@ build_output/
 *.build/
 *.dist/
 *.onefile-build/
+release/
 
 # ==========================================================
 # Operating System

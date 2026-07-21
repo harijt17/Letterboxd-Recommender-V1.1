@@ -3,6 +3,8 @@ from utils.paths import (
     EXTRACTED_DIR,
 )
 
+from utils.runtime_cleanup import cleanup_runtime
+
 
 # ==========================================================
 # Runtime Initialization
@@ -10,7 +12,10 @@ from utils.paths import (
 
 def initialize_runtime():
     """
-    Creates all runtime folders required by the application.
+    Initializes the runtime environment.
+
+    - Creates required runtime folders.
+    - Cleans temporary runtime data.
     """
 
     for directory in (
@@ -21,3 +26,5 @@ def initialize_runtime():
             parents=True,
             exist_ok=True,
         )
+
+    cleanup_runtime()
